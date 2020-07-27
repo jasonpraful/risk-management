@@ -1,0 +1,5 @@
+.containerLayout {
+    flex: auto;
+    flex-direction: row;
+    margin: 10px;
+}

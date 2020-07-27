@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Navbar from './elements/Navbar'
+import "bootstrap/dist/css/bootstrap.min.css";
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import Documents from './pages/Documents'
+import Risks from './pages/Risks'
+import HomePage from './pages/HomePage'
+import NotFoundPage from './pages/NotFoundPage'
+import Profile from './pages/Profile'
+import Login from './pages/Login'
+import Register from './pages/Register'
 
-function App() {
+
+
+class App extends React.Component {
+  
+  render(){
+    const LoggedInUrl = (
+    <Switch>
+            <Route path="/" component={HomePage} exact />
+            <Route path="/documents" component={Documents} exact />
+            <Route path="/risks" component={Risks} exact />
+            <Route path="/login" component={Login} exact />
+            <Route path="/register" component={Register} exact />
+            <Route path="/profile" component={Profile} exact />
+            <Route component={NotFoundPage} />
+          </Switch>
+  )
+  const loggedOut = (
+    <Switch>
+            <Route path="/" component={Login} exact />
+            <Route path="/login" component={Login} exact />
+            <Route path="/register" component={Register} exact />
+            <Route component={Login} />
+        </Switch>
+  )
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Navbar />
+        <div id="page-body">
+          {localStorage.userToken ? LoggedInUrl : loggedOut}
+        </div>
+      </div>
+    </Router>
   );
 }
+}
+
+
 
 export default App;
